@@ -12,7 +12,8 @@ function originIsAllowed(origin) {
   // put logic here to detect whether the specified origin is allowed.
   return true;
 }
-
+var cclients=[];
+var cclientnum=0
 var SampleApp = function() {
 
     //  Scope.
@@ -167,33 +168,26 @@ wsServer.on('request', function(request) {
       console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
       return;
     }
-
-    var connection = request.accept(null, request.origin);
-    console.log((new Date()) + ' Connection accepted.');
-    connection.on('message', function(message) {
+    var cidx=cclients.length;
+    cclients[cidx] = request.accept(null, request.origin);
+    cclientnum++;
+    cclients[cidx].on('message', function(message) {var cc;
         if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-            connection.sendUTF(message.utf8Data);
+            if(message.utf8Data.indexOf('#!howmany')==0){cclients[cidx].sendUTF(cclientnum.toString())}else{
+            for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF(message.utf8Data);}}
         }
         else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            connection.sendBytes(message.binaryData);
+            for(cc=0;cc<cclients.length;cc++){cclients[cc].sendBytes(message.binaryData);}
         }
     });
-    connection.on('close', function(reasonCode, description) {
-        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+    cclients[cidx].on('close', function(reasonCode, description) {var cc;
+        for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF('One user left.');cclientnum--;}
     });
 });
     };
 
 };   /*  Sample Application.  */
 
-
-
-/**
- *  main():  Main code.
- */
 var zapp = new SampleApp();
 zapp.initialize();
 zapp.start();
-

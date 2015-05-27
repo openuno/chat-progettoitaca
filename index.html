@@ -63,18 +63,17 @@
 
   window.addEventListener("load", init, false);
 function speak(){
-	var words=document.getElementByID('inputext').value;
-	document.getElementByID('inputext').value='';
+	var words=document.getElementById('inputext').value;
+	document.getElementById('inputext').value='';
 	websocket.send(words);
 
 }
 </script>
 <body>
 <h2>WebSocket Test</h2>
-<form action="/" mathod="get" onsubmit="speak();return false;">
 <textarea id="inputext">
 	
-</textarea><input type="submit" value="invia" />
-</form>
+</textarea><input type="button" value="invia" onclick="speak()"/>
+
 <div id="output"></div>
 </body>

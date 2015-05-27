@@ -7,6 +7,7 @@
 <script language="javascript" type="text/javascript">
 
   var wsUri = "ws://progettoitacachat-openuno.rhcloud.com";
+  //var wsUri = "ws://localhost:1487";
   var output;
 
   function init()
@@ -38,7 +39,7 @@
   function onMessage(evt)
   {
     writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
-    websocket.close();
+    //websocket.close();
   }
 
   function onError(evt)
@@ -61,9 +62,19 @@
   }
 
   window.addEventListener("load", init, false);
+function speak(){
+	var words=document.getElementByID('inputext').value;
+	document.getElementByID('inputext').value='';
+	websocket.send(words);
 
+}
 </script>
-
+<body>
 <h2>WebSocket Test</h2>
-
+<form action="/" mathod="get" onsubmit="speak();return false;">
+<textarea id="inputext">
+	
+</textarea><input type="submit" value="invia" />
+</form>
 <div id="output"></div>
+</body>

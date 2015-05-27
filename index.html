@@ -61,9 +61,9 @@
 
   window.addEventListener("load", init, false);
 function speak(){
-	var words=document.getElementById('inputext').value;
-	words=document.getElementById('inputuser').value+': '+words;
-	document.getElementById('inputext').value='';
+	var words=document.getElementById('inputuser').value;
+	if(!words){words=''}if(words==''){words='anonymous'}
+	words+': '+document.getElementById('inputext').value;
 	websocket.send(words);
 }
 </script>

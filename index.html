@@ -74,8 +74,9 @@ html,body{width:100%;height:100%;margin:0;}
 <body><div id="supercontainer">
 <h2>Progetto Itaca Onlus - Web Chat Demo</h2>
 <form action="/" method="get" onsubmit="return false;">
-	Nome utente : <input id="inputuser" type="text" style="width:10%" /><br/>
-	MEssaggio : <input id="inputext" type="text" style="width:80%" /><input type="submit" value="invia" onclick="speak()"/>
+	<label for="inputuser" style="width:10%;display:inline-block">Nome utente : </label><input id="inputuser" type="text" style="width:20%" />
+	<br/>
+	<label for="inputext" style="width:10%;display:inline-block">Messaggio : </label><input id="inputext" type="text" style="width:80%" /><input type="submit" value="invia" onclick="speak()"/>
 </form>
 <div id="output"></div>
 </div></body>

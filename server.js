@@ -1,35 +1,156 @@
 #!/bin/env node
-var http=require('http'),fs=require('fs'),url=require('url'),path=require("path");var WebSocketServer = require('websocket').server;
-var mime={mp3:'audio/mpeg',wav:'audio/x-wav',html:'text/html',htm:'text/html',xml:'text/xml',txt:'text/plain',js:'text/javascript'};
-var unode={};
-function load($,undefined){$.config={html404:'index.html',portnum:80,rootfolder:process.cwd()};
-    $.action={ping:{
+//  OpenShift sample Node application
+var express = require('express');
+var fs      = require('fs');
+var WebSocketServer = require('websocket').server;
+var http=require('http');
+/**
+ *  Define the sample application.
+ */
 
-    }};
-    $.process=function(req,res){var ctx=new $.context(req,res);
-        var act=url.parse(req.url).pathname;
-        var fn=path.join($.config.rootfolder,act);
-        fs.exists(fn,function(ee1){
-            if(!ee1){fn=path.join($.config.rootfolder,$.config.html404);
-                fs.exists(fn,function(ee2){if(!ee2){res.writeHeader(404,{"Content-Type":"text/plain"});res.write("404 Not Found\n");res.end();}else{ctx.streamfile(fn);}}); 
-            }else{ctx.streamfile(fn);}});},
-    $.context=function(req,res){this.req=req;this.res=res;};
-    $.context.prototype={
-        streamfile:function(fn){var ctx=this;
-            fs.readFile(fn,"binary",function(err,file){    
-                if(err){ctx.res.writeHeader(500,{"Content-Type": "text/plain"});ctx.res.write(err + "\n");ctx.res.end();}
-                else{var hh={'Content-Length':fs.statSync(fn)["size"]};
-                    var ext=path.extname(fn);if(mime[ext]){hh['Content-Type']=mime[ext];}
-                    ctx.res.writeHeader(200,hh);ctx.res.write(file, "binary");ctx.res.end();}});},};
-    if(process.argv[2]){$.config.rootfolder=process.argv[2];if(process.argv[3]){$.config.portnum=process.argv[3]}};
-    return $;
-};
-unode=load(unode);
+function originIsAllowed(origin) {
+  // put logic here to detect whether the specified origin is allowed.
+  return true;
+}
 
-var HSERVER=http.createServer(unode.process);HSERVER.listen(unode.config.portnum);
-console.log("Server Running on "+unode.config.portnum); 
-console.log("folder: "+unode.config.rootfolder); 
-wsServer = new WebSocketServer({
+var SampleApp = function() {
+
+    //  Scope.
+    var self = this;
+
+
+    /*  ================================================================  */
+    /*  Helper functions.                                                 */
+    /*  ================================================================  */
+
+    /**
+     *  Set up server IP address and port # using env variables/defaults.
+     */
+    self.setupVariables = function() {
+        //  Set the environment variables we need.
+        self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
+        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
+        if (typeof self.ipaddress === "undefined") {
+            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
+            //  allows us to run/test the app locally.
+            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
+            self.ipaddress = "127.0.0.1";
+        };
+    };
+
+
+    /**
+     *  Populate the cache.
+     */
+    self.populateCache = function() {
+        if (typeof self.zcache === "undefined") {
+            self.zcache = { 'index.html': '' };
+        }
+
+        //  Local cache for static content.
+        self.zcache['index.html'] = fs.readFileSync('./index.html');
+    };
+
+
+    /**
+     *  Retrieve entry (content) from cache.
+     *  @param {string} key  Key identifying content to retrieve from cache.
+     */
+    self.cache_get = function(key) { return self.zcache[key]; };
+
+
+    /**
+     *  terminator === the termination handler
+     *  Terminate server on receipt of the specified signal.
+     *  @param {string} sig  Signal to terminate on.
+     */
+    self.terminator = function(sig){
+        if (typeof sig === "string") {
+           console.log('%s: Received %s - terminating sample app ...',
+                       Date(Date.now()), sig);
+           process.exit(1);
+        }
+        console.log('%s: Node server stopped.', Date(Date.now()) );
+    };
+
+
+    /**
+     *  Setup termination handlers (for exit and a list of signals).
+     */
+    self.setupTerminationHandlers = function(){
+        //  Process on exit and signals.
+        process.on('exit', function() { self.terminator(); });
+
+        // Removed 'SIGPIPE' from the list - bugz 852598.
+        ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
+         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
+        ].forEach(function(element, index, array) {
+            process.on(element, function() { self.terminator(element); });
+        });
+    };
+
+
+    /*  ================================================================  */
+    /*  App server functions (main app logic here).                       */
+    /*  ================================================================  */
+
+    /**
+     *  Create the routing table entries + handlers for the application.
+     */
+    self.createRoutes = function() {
+        self.routes = { };
+
+        self.routes['/asciimo'] = function(req, res) {
+            var link = "http://i.imgur.com/kmbjB.png";
+            res.send("<html><body><img src='" + link + "'></body></html>");
+        };
+
+        self.routes['/'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            res.send(self.cache_get('index.html') );
+        };
+    };
+
+
+    /**
+     *  Initialize the server (express) and create the routes and register
+     *  the handlers.
+     */
+    self.initializeServer = function() {
+        self.createRoutes();
+        self.app = express.createServer();
+
+        //  Add handlers for the app (from the routes).
+        for (var r in self.routes) {
+            self.app.get(r, self.routes[r]);
+        }
+    };
+
+
+    /**
+     *  Initializes the sample application.
+     */
+    self.initialize = function() {
+        self.setupVariables();
+        self.populateCache();
+        self.setupTerminationHandlers();
+
+        // Create the express server and routes.
+        self.initializeServer();
+    };
+
+
+    /**
+     *  Start the server (starts up the sample application).
+     */
+    self.start = function() {
+        //  Start the app on the specific interface (and port).
+       var HSERVER=self.app.listen(self.port, self.ipaddress, function() {
+            console.log('%s: Node server started on %s:%d ...',
+                        Date(Date.now() ), self.ipaddress, self.port);
+        });
+       wsServer = new WebSocketServer({
     httpServer: HSERVER,
     // You should not use autoAcceptConnections for production
     // applications, as it defeats all standard cross-origin protection
@@ -38,11 +159,6 @@ wsServer = new WebSocketServer({
     // to accept it.
     autoAcceptConnections: false
 });
-
-function originIsAllowed(origin) {
-  // put logic here to detect whether the specified origin is allowed.
-  return true;
-}
 
 wsServer.on('request', function(request) {
     if (!originIsAllowed(request.origin)) {
@@ -68,3 +184,16 @@ wsServer.on('request', function(request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
+    };
+
+};   /*  Sample Application.  */
+
+
+
+/**
+ *  main():  Main code.
+ */
+var zapp = new SampleApp();
+zapp.initialize();
+zapp.start();
+

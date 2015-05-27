@@ -80,7 +80,7 @@ var SampleApp = function() {
                     else{for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF(message.utf8Data);}}
                 }else if(message.type==='binary'){for(cc=0;cc<cclients.length;cc++){cclients[cc].sendBytes(message.binaryData);}}
             });
-            cclients[cidx].on('close',function(rcode,desc){var cc;for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF('one user left.');cclientnum--;}});
+            cclients[cidx].on('close',function(rcode,desc){var cc;for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF('one user left.');}cclientnum--;});
         });
     };
 };

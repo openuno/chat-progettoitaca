@@ -63,7 +63,7 @@
 function speak(){
 	var words=document.getElementById('inputuser').value;
 	if(!words){words=''}if(words==''){words='anonymous'}
-	words+': '+document.getElementById('inputext').value;
+	words=words+': '+document.getElementById('inputext').value;
 	websocket.send(words);
 }
 </script>

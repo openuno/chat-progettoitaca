@@ -56,13 +56,14 @@
     var pre = document.createElement("p");
     pre.style.wordWrap = "break-word";
     pre.innerHTML = message;
-    output.appendChild(pre);
+    output.insertBefore(pre,output.firstChild);
   }
 
   window.addEventListener("load", init, false);
 function speak(words){if(!words){words=document.getElementById('inputuser').value;
 	if(!words){words=''}if(words==''){words='anonymous'}
 	words=words+': '+document.getElementById('inputext').value;}
+  document.getElementById('inputext').value='';
 	websocket.send(words);
 	//TODO:SCROLL DOWN OUTPUTDIV
 }

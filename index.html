@@ -1,84 +1,16 @@
 <!DOCTYPE html>
-
-<meta charset="utf-8" />
-
+<html><head>
+<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+<meta charset="utf-8"/>
 <title>Progetto Itaca Onlus - Web Chat Demo</title>
-
-<script language="javascript" type="text/javascript">
-
-  var wsUri = "ws://progettoitacachat-openuno.rhcloud.com:8000";
-  //var wsUri = "ws://localhost:1487";
-  var output;
-
-  function init()
-  {
-    output = document.getElementById("output");
-    testWebSocket();
-  }
-
-  function testWebSocket()
-  {
-    websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) { onOpen(evt) };
-    websocket.onclose = function(evt) { onClose(evt) };
-    websocket.onmessage = function(evt) { onMessage(evt) };
-    websocket.onerror = function(evt) { onError(evt) };
-  }
-
-  function onOpen(evt)
-  {
-    writeToScreen("CONNECTED");
-  }
-
-  function onClose(evt)
-  {
-    writeToScreen("DISCONNECTED");
-  }
-
-  function onMessage(evt)
-  {
-    writeToScreen('<span style="color: blue;">' + evt.data+'</span>');
-    //websocket.close();
-  }
-
-  function onError(evt)
-  {
-    writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-  }
-
-  function doSend(message)
-  {
-    websocket.send(message);
-  }
-
-  function writeToScreen(message)
-  {
-    var pre = document.createElement("p");
-    pre.style.wordWrap = "break-word";
-    pre.innerHTML = message;
-    output.insertBefore(pre,output.firstChild);
-  }
-
-  window.addEventListener("load", init, false);
-function speak(words){if(!words){words=document.getElementById('inputuser').value;
-	if(!words){words=''}if(words==''){words='anonymous'}
-	words=words+': '+document.getElementById('inputext').value;}
-  document.getElementById('inputext').value='';
-	websocket.send(words);
-	//TODO:SCROLL DOWN OUTPUTDIV
-}
-</script>
 <style>
-html,body{width:100%;height:100%;margin:0;}
-#supercontainer{width:100%;height:100%;overflow:auto;}
+html,body{background-color:#ddf;text-align:center }
 </style>
-<body><div id="supercontainer">
-<h2>Progetto Itaca Onlus - Web Chat Demo</h2>
-<form action="/" method="get" onsubmit="return false;">
-	<label for="inputuser" style="width:10%;display:inline-block">Nome utente : </label><input id="inputuser" type="text" style="width:20%" />
-	<input type="button" value="how many clients" onclick="speak('#!howmany')"/>
-	<br/>
-	<label for="inputext" style="width:10%;display:inline-block">Messaggio : </label><input id="inputext" type="text" style="width:80%" /><input type="submit" value="invia" onclick="speak()"/>
-</form>
-<div id="output"></div>
-</div></body>
+</head>
+<body>
+<img id="logo" style="" src="http://www.progettoitaca.org/images/logo_progetto_itaca.png" alt="Progetto Itaca"/></br></br></br></br></br></br></br>
+<a href="user.html"><img id="user" style="" src="user.png" alt="Progetto Itaca"/></a>
+<a href="operator.html"><img id="operator" style="" src="operator.png" alt="Progetto Itaca"/></a>
+<script>
+</script>
+</body></html>

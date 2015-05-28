@@ -25,9 +25,13 @@ var SampleApp = function() {
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
             self.zcache = { 'index.html': '' };
+			self.zcache = { 'user.html': '' };
+			self.zcache = { 'operator.html': '' };
         }
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
+		self.zcache['user.html'] = fs.readFileSync('./user.html');
+		self.zcache['operator.html'] = fs.readFileSync('./operator.html');
     };
     self.cache_get = function(key) { return self.zcache[key]; };
     /**
@@ -64,7 +68,7 @@ var SampleApp = function() {
             res.send(self.cache_get('index.html') );
         };
     };
-    self.initializeServer=function(){self.createRoutes();self.app=express.createServer();for(var r in self.routes){self.app.get(r,self.routes[r]);}};
+    self.initializeServer=function(){self.createRoutes();self.app=express.createServer();self.app.use(express.static(__dirname));for(var r in self.routes){self.app.get(r,self.routes[r]);}};
     self.initialize=function(){self.setupVariables();self.populateCache();self.setupTerminationHandlers();self.initializeServer();};
     self.start = function() {
        var HSERVER=self.app.listen(self.port, self.ipaddress, function() {

@@ -25,13 +25,9 @@ var SampleApp = function() {
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
             self.zcache = { 'index.html': '' };
-			self.zcache = { 'user.html': '' };
-			self.zcache = { 'operator.html': '' };
         }
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
-		self.zcache['user.html'] = fs.readFileSync('./user.html');
-		self.zcache['operator.html'] = fs.readFileSync('./operator.html');
     };
     self.cache_get = function(key) { return self.zcache[key]; };
     /**

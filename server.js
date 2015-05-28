@@ -3,10 +3,7 @@ var express = require('express');
 var fs      = require('fs');
 var WebSocketServer = require('websocket').server;
 var http=require('http');
-function originIsAllowed(origin) {
-  // put logic here to detect whether the specified origin is allowed.
-  return true;
-}
+function originIsAllowed(origin){return true;}
 var cclients=[];
 var cclientnum=0
 var SampleApp = function() {
@@ -25,13 +22,9 @@ var SampleApp = function() {
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
             self.zcache = { 'index.html': '' };
-			self.zcache = { 'user.html': '' };
-			self.zcache = { 'operator.html': '' };
         }
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
-		self.zcache['user.html'] = fs.readFileSync('./user.html');
-		self.zcache['operator.html'] = fs.readFileSync('./operator.html');
     };
     self.cache_get = function(key) { return self.zcache[key]; };
     /**
@@ -64,7 +57,7 @@ var SampleApp = function() {
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
         self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html'); 
+            res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
     };
@@ -75,16 +68,17 @@ var SampleApp = function() {
             console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), self.ipaddress, self.port);
         });
         wsServer=new WebSocketServer({httpServer:HSERVER,autoAcceptConnections:false});
-        wsServer.on('request', function(request) {
+        wsServer.on('request',function(request){
             if(!originIsAllowed(request.origin)){request.reject();return;}
-            var cidx=cclients.length;cclients[cidx]=request.accept(null, request.origin);cclientnum++;
-            cclients[cidx].on('message',function(message){var cc;
+            var cidx=cclients.length;cclients[cidx]=request.accept(null, request.origin);
+            cclientnum++;
+            cclients[cidx].on('message',function(message){var cc;var cn;
                 if(message.type==='utf8'){
                     if(message.utf8Data.indexOf('#!howmany')==0){cclients[cidx].sendUTF(cclientnum.toString())}
-                    else{for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF(message.utf8Data);}}
-                }else if(message.type==='binary'){for(cc=0;cc<cclients.length;cc++){cclients[cc].sendBytes(message.binaryData);}}
+                    else{for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendUTF(message.utf8Data);}}
+                }else if(message.type==='binary'){for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendBytes(message.binaryData);}}
             });
-            cclients[cidx].on('close',function(rcode,desc){var cc;for(cc=0;cc<cclients.length;cc++){cclients[cc].sendUTF('one user left.');}cclientnum--;});
+            cclients[cidx].on('close',function(rcode,desc){var cc;cclientnum=0;for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected){cn.sendUTF('one user left.');cclientnum++;}}});
         });
     };
 };

@@ -4,8 +4,21 @@ var fs      = require('fs');
 var WebSocketServer = require('websocket').server;
 var http=require('http');
 function originIsAllowed(origin){return true;}
-var cclients=[];
-var cclientnum=0
+var cclients=[];var cclientnum=0;var _uid=-1;function uid(){_uid++;return 'uid'+_uid;}
+//STATUS:0=Unassigned
+//STATUS:1=Enqueued
+//STATUS:2=Chatting
+chatclient=function(request){this.conn=null;this.sid=uid();this.alias='Anon'+_uid;this.init(request);this.status=0;}chatclient.prototype={
+	init:function(request){this.conn=requst.accept(null,request.origin);
+
+	},
+	process:function(msg){
+		if(this.status==0){}
+		else if(this.status==1){}
+		else if(this.status==2){}
+	},
+}
+
 var SampleApp = function() {
     var self = this;
     self.setupVariables = function() {
@@ -13,15 +26,13 @@ var SampleApp = function() {
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
         if (typeof self.ipaddress === "undefined") {
-            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
-            //  allows us to run/test the app locally.
-            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
-            self.ipaddress = "127.0.0.1";
+            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this allows us to run/test the app locally.
+            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');self.ipaddress = "127.0.0.1";
         };
     };
-    self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
+    self.populateCache=function(){
+        if (typeof self.zcache==="undefined"){
+            self.zcache={'index.html':''};
         }
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
@@ -50,15 +61,13 @@ var SampleApp = function() {
             process.on(element, function() { self.terminator(element); });
         });
     };
-    self.createRoutes = function() {
-        self.routes = { };
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
+    self.createRoutes=function(){self.routes={};
+        self.routes['/asciimo']=function(req,res){var link='http://i.imgur.com/kmbjB.png';
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
+        self.routes['/']=function(req,res){
+            res.setHeader('Content-Type','text/html');
+            res.send(self.cache_get('index.html'));
         };
     };
     self.initializeServer=function(){self.createRoutes();self.app=express.createServer();self.app.use(express.static(__dirname));for(var r in self.routes){self.app.get(r,self.routes[r]);}};

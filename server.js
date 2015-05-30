@@ -8,7 +8,7 @@ var cclients=[];var cclientnum=0;var _uid=-1;function uid(){_uid++;return 'uid'+
 //STATUS:0=Unassigned
 //STATUS:1=Enqueued
 //STATUS:2=Chatting
-chatclient=function(request){this.conn=null;this.sid=uid();this.alias='Anon'+_uid;this.init(request);this.status=0;}chatclient.prototype={
+chatclient=function(request){this.conn=null;this.sid=uid();this.alias='Anon'+_uid;this.init(request);this.status=0;};chatclient.prototype={
 	init:function(request){this.conn=requst.accept(null,request.origin);
 
 	},

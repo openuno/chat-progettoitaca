@@ -5,7 +5,7 @@
 <title>Progetto Itaca Onlus - Web Chat Demo</title>
 
 <script language="javascript" type="text/javascript">
-
+window.set=0;
   var wsUri = "ws://progettoitacachat-openuno.rhcloud.com:8000";
   //var wsUri = "ws://localhost:1487";
   var output;
@@ -68,21 +68,36 @@
   }
 
   window.addEventListener("load", init, false);
-function speak(words){if(!words){words=document.getElementById('inputuser').value;
-	if(!words){words=''}if(words==''){words='anonymous'}
+function speak(words){
+if(document.getElementById('inputuser').value==''&&set==0){noName()}else{
+if(!words){words=document.getElementById('inputuser').value;
+	if(!words){words=''}if(words==''){words=myRandName}
 	words=words+': '+document.getElementById('inputext').value;}
   document.getElementById('inputext').value='';
-	websocket.send(words);
+	websocket.send(words);}
 	//TODO:SCROLL DOWN OUTPUTDIV
 }
 
 function checkMobile(){
 if(innerWidth<innerHeight){document.getElementById('logo').classList.add('invisible')}else{document.getElementById('logo').classList.remove('invisible')}
 }
+function randomName(){
+var a=['Albero','Cielo','Colle','Oceano','Monte','Sentiero','Dirupo','Fondale','Spazio','Bosco',]
+var b=['Verde','Argento','Fiorito','Sacro','Lucente','Nascosto','Profondo','Leggero','Silente','Tranquillo',]
+var c=['1','2','3','4','5','6','7','8','9','10',]
+var ar=(Math.floor(Math.random()*10));var br=(Math.floor(Math.random()*10));var cr=(Math.floor(Math.random()*10));
+window.myRandName=a[ar]+b[br]+c[cr];}
+
+function noName(){
+document.getElementById('alertName').style.display="block";
+}
+function back(){
+document.getElementById('alertName').style.display="none";set=1;
+}
 </script>
 <style>
 html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;padding-top:1%;padding-left:1%;padding-right:3%;background-color:#ddf;overflow:hidden}
-#supercontainer{width:100%;height:100%;overflow:auto;}
+#supercontainer{width:100%;height:100%;overflow:auto;text-align:center}
 #sendBut {display:none
 	
 }
@@ -130,12 +145,13 @@ html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;paddi
  }
   .textsend { padding-left:2px; font-size:13px; border-width:2px; border-radius:5px; border-color:#383680; background-color:#d7d6eb; text-shadow:0px 0px 0px rgba(42,42,42,.0); font-weight:bold;  } 
 		 .textsend:focus { outline:none; } 
-#output{background-color:#fff;width:85%}
+#output{background-color:#fff;width:95%;text-align:left !important}
 </style></head>
-<body onresize="checkMobile()" onload="checkMobile()"><div id="supercontainer">
-<h2>Progetto Itaca Onlus - Web Chat Demo - User side</h2>
-<h5>Sei in linea con Andrea. Inserisci il tuo nome!</h5>
-<input class="textsend" id="inputuser" type="text" style="width:20%" />
+<body onresize="checkMobile()" onload="checkMobile();randomName()"><div id="supercontainer">
+<div id="alertName" style="background-color:white;position:absolute;width:50%;height:50%;z-index:2000;margin-left:25%;margin-top:25%;display:none">Attenzione, non hai inserito nessun nome!<button onclick="back()">Indietro</button></div>
+<div style="font-size:24px"><b>Progetto Itaca Onlus</br> - Web Chat Demo - User side</b></div>
+<div style="font-size:14px">Sei in linea con Andrea. Inserisci il tuo nome!</div>
+<input class="textsend" id="inputuser" type="text" style="width:40%" placeholder="nome..."/>
 <div id="output"></div><img id="logo" style="position:fixed;right:0;top:0" src="http://www.progettoitaca.org/images/logo_progetto_itaca.png" alt="Progetto Itaca">
 <form style="position:absolute;bottom:1%;left:0;width:100%;background-color:#ddf;left:1%"action="/" method="get" onsubmit="return false;">
 	<input class="textsend" id="inputext" type="text" style="width:86%;height:40px" /><input class="button" id="sendBut" type="submit" value="" onclick="speak()"><i onclick="speak()" class="fa fa-paper-plane fa-2x"></i></input>

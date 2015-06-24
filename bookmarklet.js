@@ -1,1 +1,1 @@
-jQuery('a[title="ItaChat"]').attr('href','javascript:var thewindow=window.open("http://itaca.openuno.org/user.html","save_listing","width=300,height=400,resizable=no,scrollbars=no,menubar=no,status=no,toolbar=no");')
+jQuery('a[title="ItaChat"]').attr('href','javascript:var thewindow=window.open("http://itaca.openuno.org/user.html","save_listing","width=320,height=430,resizable=no,scrollbars=no,menubar=no,status=no,toolbar=no");')

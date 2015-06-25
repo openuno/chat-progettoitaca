@@ -139,6 +139,8 @@ if(innerWidth<innerHeight){document.getElementById('logo').classList.add('invisi
 }
 window.chatsession={logged:false};
 function myInit(){
+if(window.chatsession.logged){document.getElementById('supercontainer').style.display='';}
+else{document.getElementById('loginarea').style.display='';};
 //RANDOM NAME//
 var a=['Albero','Cielo','Colle','Oceano','Monte','Sentiero','Dirupo','Fondale','Spazio','Bosco',]
 var b=['Verde','Argento','Fiorito','Sacro','Lucente','Nascosto','Profondo','Leggero','Silente','Tranquillo',]
@@ -146,9 +148,6 @@ var c=['1','2','3','4','5','6','7','8','9','10',]
 var ar=(Math.floor(Math.random()*10));var br=(Math.floor(Math.random()*10));var cr=(Math.floor(Math.random()*10));
 window.myRandName=a[ar]+b[br]+c[cr];
 //---------------------------------//
-
-if(window.chatsession.logged){document.getElementById('supercontainer').style.display='';}
-else{document.getElementById('loginarea').style.display='';}
 }
 
 function noName(){

@@ -55,10 +55,11 @@
   }
   function google_getEmailCallback(obj){/*setdbsession(obj['email']);*/
   console.log(JSON.stringify(obj))
-  document.getElementById('inputuser').value=obj['email'];
+  document.getElementById('inputuser').value=obj['name'];
   window.chatsession.logged=true;
   document.getElementById('loginarea').style.display="none";
   document.getElementById('supercontainer').style.display="";
+  document.getElementsByClassName('_li')[0].style.display='none'
   }
     </script><script src="https://apis.google.com/js/client.js"></script>
 <script>
@@ -195,6 +196,7 @@ function checkLoginState(){var mail=FB.getUserID();if(mail!=''){
 	  chatsession.logged=true;chatsession.mail=mail;
 	  document.getElementById('supercontainer').style.display='';
 	  document.getElementById('loginarea').style.display='none';
+	  document.getElementsByClassName('_li')[0].style.display='none'
     })}
    else{}
 }

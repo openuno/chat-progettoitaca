@@ -46,16 +46,20 @@
 		gapi.client.setApiKey('AIzaSyBhEuXhKM8KZk3PG3U9tagvwMH66XC52lg');
         gapi.client.load('gmail', 'v1', google_getEmail);
       }
-  function google_getEmail(){
+  function google_getEmailZ(){
     // Carica le librerie oauth2 per abilitare i metodi userinfo.
     gapi.client.load('oauth2', 'v2', function() {
           var request = gapi.client.oauth2.userinfo.get();
           request.execute(google_getEmailCallback);
         });
   }
+  function google_getEmail(){ // Load the Plus library to get the People package and methods
+  gapi.client.load('plus', 'v1', function() { var request = gapi.client.plus.people.get('me'); request.execute(google_getEmailCallback); }); };
+  function getFullNameCallback(obj){ var el = document.getElementById('email'); var name = ''; 
+  if (obj['displayName']) { name = 'Name: '+obj.displayName; } el.innerHTML = name; toggleElement('name'); };
   function google_getEmailCallback(obj){/*setdbsession(obj['email']);*/
   console.log(JSON.stringify(obj));
-  document.getElementById('inputuser').value=obj['email'.replace('@gmail.com','')];
+  document.getElementById('inputuser').value=obj['displayName'];
   window.chatsession.logged=true;
   document.getElementById('loginarea').style.display="none";
   document.getElementById('supercontainer').style.display="";

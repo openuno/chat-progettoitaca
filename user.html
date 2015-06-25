@@ -19,8 +19,8 @@ _u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createE
           }, handleAuthResult);
       }
    function handleAuthResult(authResult) {
-        var authorizeDiv = document.getElementById('authorize-div');
-        var authorizeBut = document.getElementById('authorize-button');
+        var authorizeDiv = document.getElementById('loginarea');
+        var authorizeBut = document.getElementById('gm');
         if (authResult && !authResult.error) {
           authorizeDiv.style.display = 'none';
           loadGmailApi();

@@ -7,7 +7,7 @@
 //_u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createElement('script');_u1(o,'type','text/javascript');_u1(o,'src',u);document.getElementsByTagName('head')[0].appendChild(o);};
 //var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
    var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';   
-   var SCOPES = ['https://www.googleapis.com/auth/userinfo.email'];
+   var SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
    /**
     * Check if current user has authorized this application.
    */
@@ -46,20 +46,16 @@
 		gapi.client.setApiKey('AIzaSyBhEuXhKM8KZk3PG3U9tagvwMH66XC52lg');
         gapi.client.load('gmail', 'v1', google_getEmail);
       }
-  function google_getEmailZ(){
+  function google_getEmail(){
     // Carica le librerie oauth2 per abilitare i metodi userinfo.
     gapi.client.load('oauth2', 'v2', function() {
           var request = gapi.client.oauth2.userinfo.get();
           request.execute(google_getEmailCallback);
         });
   }
-  function google_getEmail(){ // Load the Plus library to get the People package and methods
-  gapi.client.load('plus', 'v1', function() { var request = gapi.client.plus.people.get('me'); request.execute(google_getEmailCallback); }); };
-  /*function getFullNameCallback(obj){ */
-  function google_getEmailCallback(obj){
-  /*setdbsession(obj['email']);*/
-  console.log(JSON.stringify(obj));
-  document.getElementById('inputuser').value=obj.displayName;
+  function google_getEmailCallback(obj){/*setdbsession(obj['email']);*/
+  console.log(JSON.stringify(obj))
+  document.getElementById('inputuser').value=obj['email'];
   window.chatsession.logged=true;
   document.getElementById('loginarea').style.display="none";
   document.getElementById('supercontainer').style.display="";

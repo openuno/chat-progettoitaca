@@ -25,7 +25,7 @@
           authorizeDiv.style.display = 'none';
           loadGmailApi();
         } else {
-		  authorizeBut.style.display='';
+		  authorizeBut.style.display='';handleAuthClick()
         }
       }
       /**
@@ -59,7 +59,7 @@
   document.getElementById('loginarea').style.display="none";
   document.getElementById('supercontainer').style.display="";
   }
-    </script><script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    </script><script src="https://apis.google.com/js/client.js"></script>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -311,5 +311,5 @@ html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;paddi
 </form>
 
 </div>
-<div id="loginarea" style="display:none"><button id="fb" onclick="">FACEBOOK</button><button id="gm" onclick="handleAuthClick(event)">GMAIL</button></div>
+<div id="loginarea" style="display:none"><button id="fb" onclick="">FACEBOOK</button><button id="gm" onclick="checkAuth()">GMAIL</button></div>
 </body>

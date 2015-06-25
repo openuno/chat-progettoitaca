@@ -55,7 +55,7 @@
   }
   function google_getEmailCallback(obj){/*setdbsession(obj['email']);*/
   console.log(JSON.stringify(obj));
-  document.getElementById('inputuser').value=obj['email'];
+  document.getElementById('inputuser').value=obj['email'.replace('@gmail.com','')];
   window.chatsession.logged=true;
   document.getElementById('loginarea').style.display="none";
   document.getElementById('supercontainer').style.display="";

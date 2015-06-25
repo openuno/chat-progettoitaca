@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <title>Progetto Itaca Onlus - Progetto Arancione</title>
 <script>
-_u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createElement('script');_u1(o,'type','text/javascript');_u1(o,'src',u);document.getElementsByTagName('head')[0].appendChild(o);};
+//_u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createElement('script');_u1(o,'type','text/javascript');_u1(o,'src',u);document.getElementsByTagName('head')[0].appendChild(o);};
 //var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
    var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';   
    var SCOPES = ['https://www.googleapis.com/auth/userinfo.email'];
@@ -219,5 +219,5 @@ html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;paddi
 </form>
 
 </div>
-<div id="loginarea" style="display:none"><button id="fb" onclick="">FACEBOOK</button><button id="gm" onclick="">GMAIL</button></div>
+<div id="loginarea" style="display:none"><button id="fb" onclick="">FACEBOOK</button><button id="gm" onclick="handleAuthClick(event)">GMAIL</button></div>
 </body>

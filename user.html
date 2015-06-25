@@ -186,7 +186,17 @@ document.getElementById('alertName').style.display="block";
 function back(){
 document.getElementById('alertName').style.display="none";set=1;
 }
-function checkLoginState(a,b,c){console.log(JSON.stringify(a));console.log(JSON.stringify(c))}
+function checkLoginState(){var mail=FB.getUserID();if(mail!=''){
+   console.log('http://www.facebook.com/'+mail);
+   FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('inputuser').value=response.name;
+	  chatsession.logged=true;chatsession.mail=mail;
+	  document.getElementById('supercontainer').style.display='';
+	  document.getElementById('loginarea').style.display='none';
+    }}
+   else{}
+}
 </script>
 <style>
 html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;padding-top:1%;padding-left:1%;padding-right:3%;background-color:#fbd795;overflow:hidden}

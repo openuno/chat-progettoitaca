@@ -88,6 +88,7 @@
 -->
 
 
+
 <div id="status">
 </div>
 <script language="javascript" type="text/javascript">
@@ -270,5 +271,7 @@ html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;paddi
 </form>
 </div>
 <div id="loginarea" style="display:none"><div id="fb-root"></div>
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
 <button id="gm" onclick="checkAuth()">GOOGLE</button></div>
 </body>

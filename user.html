@@ -55,11 +55,11 @@
   }
   function google_getEmail(){ // Load the Plus library to get the People package and methods
   gapi.client.load('plus', 'v1', function() { var request = gapi.client.plus.people.get('me'); request.execute(google_getEmailCallback); }); };
-  function getFullNameCallback(obj){ var el = document.getElementById('email'); var name = ''; 
-  if (obj['displayName']) { name = 'Name: '+obj.displayName; } el.innerHTML = name; toggleElement('name'); };
-  function google_getEmailCallback(obj){/*setdbsession(obj['email']);*/
+  /*function getFullNameCallback(obj){ */
+  function google_getEmailCallback(obj){
+  /*setdbsession(obj['email']);*/
   console.log(JSON.stringify(obj));
-  document.getElementById('inputuser').value=obj['displayName'];
+  document.getElementById('inputuser').value=obj.displayName;
   window.chatsession.logged=true;
   document.getElementById('loginarea').style.display="none";
   document.getElementById('supercontainer').style.display="";

@@ -31,9 +31,7 @@ var SampleApp = function() {
         };
     };
     self.populateCache=function(){
-        if (typeof self.zcache==="undefined"){
-            self.zcache={'index.html':''};
-        }
+        if(typeof self.zcache==="undefined"){self.zcache={'index.html':''};}
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
     };
@@ -62,9 +60,6 @@ var SampleApp = function() {
         });
     };
     self.createRoutes=function(){self.routes={};
-        self.routes['/asciimo']=function(req,res){var link='http://i.imgur.com/kmbjB.png';
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
         self.routes['/']=function(req,res){
             res.setHeader('Content-Type','text/html');
             res.send(self.cache_get('index.html'));
@@ -80,17 +75,22 @@ var SampleApp = function() {
         wsServer.on('request',function(request){
             if(!originIsAllowed(request.origin)){request.reject();return;}
             var cidx=cclients.length;cclients[cidx]=request.accept(null, request.origin);
-            cclientnum++;
+            cclients[cidx].Ostatus='initial';
+            cclients[cidx].Otype='unknown';
             cclients[cidx].on('message',function(message){var cc;var cn;
-                if(message.type==='utf8'){
-                    if(message.utf8Data.indexOf('#!howmany')==0){cclients[cidx].sendUTF(cclientnum.toString())}
-                    else{for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendUTF(message.utf8Data);}}
+                if(message.type==='utf8'){var jdata;
+						  try{jdata=JSON.parse(message.utf8Data)}catch(ex){
+							  
+						  }
+						  console.log(this.Ostatus);
+                    if(true){for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendUTF(message.utf8Data);}}
                 }else if(message.type==='binary'){for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendBytes(message.binaryData);}}
             });
             cclients[cidx].on('close',function(rcode,desc){var cc;cclientnum=0;for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected){cn.sendUTF('one user left.');cclientnum++;}}});
         });
     };
 };
+//jdata={message:string,uid:string,uname,socialid}
 var zapp = new SampleApp();
 zapp.initialize();
 zapp.start();

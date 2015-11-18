@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html><head><title></title>
-<style>
-body{margin:0}
-#header{width:100%;height:20%;background-color:#ddf;top:0;position:absolute}
-#orangequeue{background-color:#ffe4b3;left:0%;position:absolute}
-#blackqueue{background-color:#000;left:33%;position:absolute}
-#whitequeue{background-color:#ccc;left:66%;position:absolute}
-.queue{width:33%;height:80%;top:20%}
-</style>
+<link rel="stylesheet" type="text/css" href="css/main.css"/>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div class="queue" id="header"></div>
-<div class="queue" id="orangequeue"></div>
-<div class="queue" id="blackqueue"></div>
-<div class="queue" id="whitequeue"></div>
+    <div class="header-queue"><b>Progetto Itaca Chat</b> <br/>Dashboard operatore</div>
+     <div class="header-queue-info"><b>Qui sotto l'elenco delle richieste</b> <br/>Puoi cliccare sulle persone in attesa per fornire loro assistenza. Controlla lo stato della richiesta dell'utente e clicca sul suo nome per aprire la chat con lui.</div>
+<div class="container-queue">
+<div class="queue" id="orangequeue">
+    <div class="queue-header">Progetto arancio</div>
+    <div id="orange-target" class="target-project">Elenco delle chat</div>
+    <div class="new-req"><b><a href="user.html" class="linktochat">Mario</a></b> | stauts: <span style="color:red">IN ATTESA</span></div>
+</div>
+<div class="queue" id="blackqueue">
+    <div class="queue-header">Progetto Nero</div>
+    <div id="black-target" class="target-project">Elenco delle chat</div>
+    <div class="new-req"><b><a href="user.html" class="linktochat">Luciano</a></b> | stauts: <span style="color:green">ATTUALMENTE IN CHAT</span></div>
+</div>
+<div class="queue" id="whitequeue">
+    <div class="queue-header">Progetto Bianco</div>
+    <div id="white-target" class="target-project">Elenco delle chat</div>
+    <div class="new-req"><b><a href="user.html" class="linktochat">Giulia</a></b> | stauts: <span style="color:black">Completato</span></div>
+</div>
+</div>
 <script>
 </script>
 </body></html>

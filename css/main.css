@@ -1,0 +1,86 @@
+
+.header-queue {
+    width:50%;
+    height:25%;
+    background-color:#fff;
+    position:absolute;
+    top:0;
+    left:0;
+    font-family: 'open sans';
+    box-sizing: border-box;
+    padding:2%;
+    font-size:5vh
+}
+
+.container-queue {
+    width:100%;
+    top:25%;
+    position:absolute;
+    background-color:transparent;
+    height:80%;
+}
+
+body {
+    margin:0;
+}
+
+.queue {
+    width:31%;
+    display:inline-block;
+    height:100%;
+    border:1vw solid white;
+}
+
+#orangequeue {
+    Background-color:rgba(250,150,0,0.5)
+}
+
+#blackqueue {
+    Background-color:rgba(0,0,0,0.2)
+}
+
+#whitequeue {
+    background-color:#f6f6f6
+}
+
+.queue-header {
+    box-sizing: border-box;
+    font-size:4vh;
+    font-family: 'open sans';
+    padding:5%;
+    text-align:center;
+    background-color:#423bc4;
+    color:white;
+    border-radius:10px 10px 0px 0px
+}
+
+.header-queue-info {
+    width:50%;
+    height:25%;
+    background-color:#fff;
+    position:absolute;
+    top:0;
+    right:0;
+    font-family: 'open sans';
+    box-sizing: border-box;
+    padding:2%;
+    font-size:3vh;
+    border-left:1px dotted #ccc
+}
+
+.target-project {
+    width:100%;
+    box-sizing: border-box;
+    padding:5%;
+    text-align:center;
+    font-family:'open sans';
+}
+
+.new-req {
+    padding:10px;
+    font-family:'open sans'
+}
+
+.linktochat {
+    text-decoration: none;
+}

@@ -84,3 +84,12 @@ body {
 .linktochat {
     text-decoration: none;
 }
+
+.image-select {
+    border-radius:8px;
+    opacity:0.7;
+}
+.image-select:hover{
+    cursor:pointer;
+    opacity:1;
+}

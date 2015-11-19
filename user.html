@@ -1,88 +1,102 @@
 <!DOCTYPE html>
-<head><link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<meta charset="utf-8" />
-<meta name=viewport content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<title>Progetto Itaca Onlus - Progetto Arancione</title>
-<script>
-//_u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createElement('script');_u1(o,'type','text/javascript');_u1(o,'src',u);document.getElementsByTagName('head')[0].appendChild(o);};
-//var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
-   var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';   
-   var SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
-   /**
-    * Check if current user has authorized this application.
-   */
-   function checkAuth() {
-        gapi.auth.authorize(
-          { 'client_id': CLIENT_ID,
-            'scope': SCOPES,
-            'immediate': true
-          }, handleAuthResult);
-      }
-   function handleAuthResult(authResult) {
-        var authorizeDiv = document.getElementById('loginarea');
-        var authorizeBut = document.getElementById('gm');
-        if (authResult && !authResult.error) {
-          authorizeDiv.style.display = 'none';
-          loadGmailApi();
-        } else {
-		  authorizeBut.style.display='';handleAuthClick()
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <title>Progetto Itaca Onlus - Progetto Arancione</title>
+    <script>
+        //_u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createElement('script');_u1(o,'type','text/javascript');_u1(o,'src',u);document.getElementsByTagName('head')[0].appendChild(o);};
+        //var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
+        var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';
+        var SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
+        /**
+         * Check if current user has authorized this application.
+         */
+        function checkAuth() {
+            gapi.auth.authorize({
+                'client_id': CLIENT_ID,
+                'scope': SCOPES,
+                'immediate': true
+            }, handleAuthResult);
         }
-      }
-      /**
-       * Initiate auth flow in response to user clicking authorize button.
-       *
-       * @param {Event} event Button click event.
-       */
-      function handleAuthClick(event) {
-        gapi.auth.authorize({client_id:CLIENT_ID,scope:SCOPES,immediate:false},handleAuthResult);
-        return false;
-      }
 
-      /**
-       * Load Gmail API client library. List labels once client library
-       * is loaded.
-       */
-      function loadGmailApi() {
-		gapi.client.setApiKey('AIzaSyBhEuXhKM8KZk3PG3U9tagvwMH66XC52lg');
-        gapi.client.load('gmail', 'v1', google_getEmail);
-      }
-  function google_getEmail(){
-    // Carica le librerie oauth2 per abilitare i metodi userinfo.
-    gapi.client.load('oauth2', 'v2', function() {
-          var request = gapi.client.oauth2.userinfo.get();
-          request.execute(google_getEmailCallback);
-        });
-  }
-  function google_getEmailCallback(obj){/*setdbsession(obj['email']);*/
-  console.log(JSON.stringify(obj))
-  document.getElementById('inputuser').value=obj['name'];
-  window.chatsession.logged=true;
-  document.getElementById('loginarea').style.display="none";
-  document.getElementById('supercontainer').style.display="";
-  document.getElementsByClassName('_li')[0].style.display='none'
-  }
-    </script><script src="https://apis.google.com/js/client.js"></script>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '488636304622879',
-      xfbml      : true,
-      version    : 'v2.3'
-    });
-  };
+        function handleAuthResult(authResult) {
+            var authorizeDiv = document.getElementById('loginarea');
+            var authorizeBut = document.getElementById('gm');
+            if (authResult && !authResult.error) {
+                authorizeDiv.style.display = 'none';
+                loadGmailApi();
+            } else {
+                authorizeBut.style.display = '';
+                handleAuthClick()
+            }
+        }
+        /**
+         * Initiate auth flow in response to user clicking authorize button.
+         *
+         * @param {Event} event Button click event.
+         */
+        function handleAuthClick(event) {
+            gapi.auth.authorize({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                immediate: false
+            }, handleAuthResult);
+            return false;
+        }
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
+        /**
+         * Load Gmail API client library. List labels once client library
+         * is loaded.
+         */
+        function loadGmailApi() {
+            gapi.client.setApiKey('AIzaSyBhEuXhKM8KZk3PG3U9tagvwMH66XC52lg');
+            gapi.client.load('gmail', 'v1', google_getEmail);
+        }
+
+        function google_getEmail() {
+            // Carica le librerie oauth2 per abilitare i metodi userinfo.
+            gapi.client.load('oauth2', 'v2', function () {
+                var request = gapi.client.oauth2.userinfo.get();
+                request.execute(google_getEmailCallback);
+            });
+        }
+
+        function google_getEmailCallback(obj) { /*setdbsession(obj['email']);*/
+            console.log(JSON.stringify(obj))
+            document.getElementById('inputuser').value = obj['name'];
+            window.chatsession.logged = true;
+            document.getElementById('loginarea').style.display = "none";
+            document.getElementById('supercontainer').style.display = "";
+            document.getElementsByClassName('_li')[0].style.display = 'none'
+        }
+    </script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '488636304622879',
+                xfbml: true,
+                version: 'v2.3'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 
-<!--
+    <!--
   Below we include the Login Button social plugin. This button uses
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
@@ -90,205 +104,185 @@
 
 
 
-<div id="status">
-</div>
-<script language="javascript" type="text/javascript">
-window.set=0;
-  var wsUri = "ws://progettoitacachat-openuno.rhcloud.com:8000";
-  //var wsUri = "ws://localhost:1487";
-  var output;
-	function mycolorx() {
-    var lettersx = '0123456789ABCDEF'.split('');
-    var colorxx = '#';
-    for (var i = 0; i < 6; i++ ) {
-        colorxx += lettersx[Math.floor(Math.random() * 12)];
-    }
-    window.colorx=colorxx;
-}
+    <div id="status">
+    </div>
+    <script language="javascript" type="text/javascript">
+        window.set = 0;
+        var wsUri = "ws://progettoitacachat-openuno.rhcloud.com:8000";
+        //var wsUri = "ws://localhost:1487";
+        var output;
 
-  function init()
-  {
-    output = document.getElementById("output");
-    testWebSocket();
-  }
+        function mycolorx() {
+            var lettersx = '0123456789ABCDEF'.split('');
+            var colorxx = '#';
+            for (var i = 0; i < 6; i++) {
+                colorxx += lettersx[Math.floor(Math.random() * 12)];
+            }
+            window.colorx = colorxx;
+        }
 
-  function testWebSocket()
-  {
-    websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) { onOpen(evt) };
-    websocket.onclose = function(evt) { onClose(evt) };
-    websocket.onmessage = function(evt) { onMessage(evt) };
-    websocket.onerror = function(evt) { onError(evt) };
-  }
+        function init() {
+            output = document.getElementById("output");
+            testWebSocket();
+        }
 
-  function onOpen(evt)
-  {
-    writeToScreen("CONNECTED");
-  }
+        function testWebSocket() {
+            websocket = new WebSocket(wsUri);
+            websocket.onopen = function (evt) {
+                onOpen(evt)
+            };
+            websocket.onclose = function (evt) {
+                onClose(evt)
+            };
+            websocket.onmessage = function (evt) {
+                onMessage(evt)
+            };
+            websocket.onerror = function (evt) {
+                onError(evt)
+            };
+        }
 
-  function onClose(evt)
-  {
-    writeToScreen("DISCONNECTED");
-  }
+        function onOpen(evt) {
+            writeToScreen("CONNECTED");
+        }
 
-  function onMessage(evt)
-  {mycolorx();
-    writeToScreen('<span style="color: '+colorx+';">' + evt.data+'</span>');
-    //websocket.close();
-  }
+        function onClose(evt) {
+            writeToScreen("DISCONNECTED");
+        }
 
-  function onError(evt)
-  {
-    writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-  }
+        function onMessage(evt) {
+            mycolorx();
+            writeToScreen('<span style="color: ' + colorx + ';">' + evt.data + '</span>');
+            //websocket.close();
+        }
 
-  function doSend(message)
-  {
-    websocket.send(message);
-  }
+        function onError(evt) {
+            writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+        }
 
-  function writeToScreen(message)
-  {
-    var pre = document.createElement("p");
-    pre.style.wordWrap = "break-word";
-    pre.innerHTML = message;
-    output.insertBefore(pre,output.firstChild);
-  }
+        function doSend(message) {
+            websocket.send(message);
+        }
 
-  window.addEventListener("load", init, false);
-function speak(words){
-if(document.getElementById('inputuser').value==''&&set==0){noName()}else{
-if(!words){words=document.getElementById('inputuser').value;
-	if(!words){words=''}if(words==''){words=myRandName}
-	words=words+': '+document.getElementById('inputext').value;}
-  document.getElementById('inputext').value='';
-	websocket.send(words);}
-	//TODO:SCROLL DOWN OUTPUTDIV
-}
+        function writeToScreen(message) {
+            var pre = document.createElement("p");
+            pre.style.wordWrap = "break-word";
+            pre.innerHTML = message;
+            output.insertBefore(pre, output.firstChild);
+        }
 
-function checkMobile(){
-if(innerWidth<innerHeight){document.getElementById('logo').classList.add('invisible')}else{document.getElementById('logo').classList.remove('invisible')}
-}
-window.chatsession={logged:false};
-function myInit(){
-if(window.chatsession.logged){document.getElementById('supercontainer').style.display='';}
-else{document.getElementById('loginarea').style.display='';};
-//RANDOM NAME//
-var a=['Albero','Cielo','Colle','Oceano','Monte','Sentiero','Dirupo','Fondale','Spazio','Bosco',]
-var b=['Verde','Argento','Fiorito','Sacro','Lucente','Nascosto','Profondo','Leggero','Silente','Tranquillo',]
-var c=['1','2','3','4','5','6','7','8','9','10',]
-var ar=(Math.floor(Math.random()*10));var br=(Math.floor(Math.random()*10));var cr=(Math.floor(Math.random()*10));
-window.myRandName=a[ar]+b[br]+c[cr];
-//---------------------------------//
-}
+        window.addEventListener("load", init, false);
 
-function noName(){
-document.getElementById('alertName').style.display="block";
-}
-function back(){
-document.getElementById('alertName').style.display="none";set=1;
-}
-function checkLoginState(){var mail=FB.getUserID();if(mail!=''){
-   console.log('http://www.facebook.com/'+mail);
-   FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('inputuser').value=response.name;
-	  chatsession.logged=true;chatsession.mail=mail;
-	  document.getElementById('supercontainer').style.display='';
-	  document.getElementById('loginarea').style.display='none';
-	  document.getElementsByClassName('_li')[0].style.display='none'
-    })}
-   else{}
-}
-function guest(){
-document.getElementById('supercontainer').style.display='';
-	  document.getElementById('loginarea').style.display='none';
-}
-</script>
-<style>
-html,body{width:100%;height:100%;margin:0;font-family: 'Bree Serif', serif;padding-top:1%;padding-left:1%;padding-right:3%;background-color:#fbd795;overflow:hidden}
-#supercontainer{width:100%;height:100%;overflow:auto}
-#sendBut {    height: 40px;
-    display: inline-block;}
-.invisible{display:none}
+        function speak(words) {
+            if (document.getElementById('inputuser').value == '' && set == 0) {
+                noName()
+            } else {
+                if (!words) {
+                    words = document.getElementById('inputuser').value;
+                    if (!words) {
+                        words = ''
+                    }
+                    if (words == '') {
+                        words = myRandName
+                    }
+                    words = words + ': ' + document.getElementById('inputext').value;
+                }
+                document.getElementById('inputext').value = '';
+                websocket.send(words);
+            }
+            //TODO:SCROLL DOWN OUTPUTDIV
+        }
 
-.button{text-decoration:none; text-align:center; 
- border:solid 1px #004F72; 
- -webkit-border-radius:4px;
- -moz-border-radius:4px; 
- border-radius: 4px; 
- font:25px Arial, Helvetica, sans-serif; 
- font-weight:bold; 
- color:#E5FFFF; 
- background-color:#ffe4b3; 
- background-image: -moz-linear-gradient(top, #ffe4b3 0%, #1982A5 100%); 
- background-image: -webkit-linear-gradient(top, #ffe4b3 0%, #1982A5 100%); 
- background-image: -o-linear-gradient(top, #ffe4b3 0%, #1982A5 100%); 
- background-image: -ms-linear-gradient(top, #ffe4b3 0% ,#1982A5 100%); 
- filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1982A5', endColorstr='#1982A5',GradientType=0 ); 
- background-image: linear-gradient(top, #ffe4b3 0% ,#1982A5 100%);   
- -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
- -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
- box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
- opacity:1; 
- -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=54); 
- filter: alpha(opacity=54);}
- 
-  .button:hover{cursor:pointer;opacity:0.5;
- border:solid 1px #004F72; 
- -webkit-border-radius:4px;
- -moz-border-radius:4px; 
- border-radius: 4px; 
- font:25px Arial, Helvetica, sans-serif; 
- font-weight:bold; 
- color:#E5FFFF; 
- background-color:#ffe4b3; 
- background-image: -moz-linear-gradient(top, #ffe4b3 0%, #1982A5 100%); 
- background-image: -webkit-linear-gradient(top, #ffe4b3 0%, #1982A5 100%); 
- background-image: -o-linear-gradient(top, #ffe4b3 0%, #1982A5 100%); 
- background-image: -ms-linear-gradient(top, #ffe4b3 0% ,#1982A5 100%); 
- filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1982A5', endColorstr='#1982A5',GradientType=0 ); 
- background-image: linear-gradient(top, #ffe4b3 0% ,#1982A5 100%);   
- -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
- -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
- box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; }
- 
- .textsend {    padding-left: 2px;
-    font-size: 10px;
-    border-width: 2px;
-    display: inline-block;
-    border-radius: 3px;
-    line-height: 10px;
-    border-color: #383680;
-    background-color: #ffe4b3;
-    /* text-shadow: 0px 0px 0px rgba(42,42,42,.0); */
-    font-weight: bold;
-    width: 77%;} 
- .textsend:focus { outline:none; } 
-#output{background-color:#fff;width:95%;text-align:left !important}
-</style></head>
+        function checkMobile() {
+            if (innerWidth < innerHeight) {
+                document.getElementById('logo').classList.add('invisible')
+            } else {
+                document.getElementById('logo').classList.remove('invisible')
+            }
+        }
+        window.chatsession = {
+            logged: false
+        };
+
+        function myInit() {
+            if (window.chatsession.logged) {
+                document.getElementById('supercontainer').style.display = '';
+            } else {
+                document.getElementById('loginarea').style.display = '';
+            };
+            //RANDOM NAME//
+            var a = ['Albero', 'Cielo', 'Colle', 'Oceano', 'Monte', 'Sentiero', 'Dirupo', 'Fondale', 'Spazio', 'Bosco', ]
+            var b = ['Verde', 'Argento', 'Fiorito', 'Sacro', 'Lucente', 'Nascosto', 'Profondo', 'Leggero', 'Silente', 'Tranquillo', ]
+            var c = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', ]
+            var ar = (Math.floor(Math.random() * 10));
+            var br = (Math.floor(Math.random() * 10));
+            var cr = (Math.floor(Math.random() * 10));
+            window.myRandName = a[ar] + b[br] + c[cr];
+            //---------------------------------//
+        }
+
+        function noName() {
+            document.getElementById('alertName').style.display = "block";
+        }
+
+        function back() {
+            document.getElementById('alertName').style.display = "none";
+            set = 1;
+        }
+
+        function checkLoginState() {
+            var mail = FB.getUserID();
+            if (mail != '') {
+                console.log('http://www.facebook.com/' + mail);
+                FB.api('/me', function (response) {
+                    console.log('Successful login for: ' + response.name);
+                    document.getElementById('inputuser').value = response.name;
+                    chatsession.logged = true;
+                    chatsession.mail = mail;
+                    document.getElementById('supercontainer').style.display = '';
+                    document.getElementById('loginarea').style.display = 'none';
+                    document.getElementsByClassName('_li')[0].style.display = 'none'
+                })
+            } else {}
+        }
+
+        function guest() {
+            document.getElementById('supercontainer').style.display = '';
+            document.getElementById('loginarea').style.display = 'none';
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/user.css" />
+</head>
+
 <body onresize="checkMobile()" onload="checkMobile();myInit()">
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.3&appId=488636304622879";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div id="supercontainer" style="display:none">
-<div id="alertName" style="background-color:white;position:absolute;width:50%;height:50%;z-index:2000;margin-left:25%;margin-top:25%;display:none">Attenzione, non hai inserito nessun nome!<button onclick="back()">Indietro</button></div>
-<a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://itaca.openuno.org/selector.html" onclick="FB.logout()" title="logout">LOGOUT</a>
-<div style="font-size:24px"><b>Progetto Itaca Onlus<br/> Progetto Arancione</b></div>
-<div style="font-size:14px">Sei in linea con Andrea. Inserisci il tuo nome!</div>
-<input class="textsend" id="inputuser" type="text" style="width:40%" placeholder="nome..."/>
-<div id="output"></div><img id="logo" style="position:fixed;right:0;top:0" src="http://www.progettoitaca.org/images/logo_progetto_itaca.png" alt="Progetto Itaca">
-<form style="position:absolute;bottom:1%;left:0;width:100%;background-color:#ffe4b3;left:1%"action="/" method="get" onsubmit="return false;">
-	<input class="textsend" id="inputext" type="text" style="height:40px" /><input class="button" id="sendBut" type="submit" value="invia" onclick="speak()"/>
-</form>
-</div>
-<div id="loginarea" style="display:none"><div id="fb-root"></div>
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-<button id="gm" onclick="checkAuth()">GOOGLE</button>
-<button id="guest" onclick="guest()">GUEST</button></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.3&appId=488636304622879";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div id="supercontainer" style="display:none">
+        <div id="alertName" style="background-color:white;position:absolute;width:50%;height:50%;z-index:2000;margin-left:25%;margin-top:25%;display:none">Attenzione, non hai inserito nessun nome!
+            <button onclick="back()">Indietro</button>
+        </div>
+        <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://itaca.openuno.org/selector.html" onclick="FB.logout()" title="logout">LOGOUT</a>
+        <div style="font-size:24px"><b>Progetto Itaca Onlus<br/> Progetto Arancione</b></div>
+        <div style="font-size:14px">Sei in linea con Andrea. Inserisci il tuo nome!</div>
+        <input class="textsend" id="inputuser" type="text" style="width:40%" placeholder="nome..." />
+        <div id="output"></div><img id="logo" style="position:fixed;right:0;top:0" src="http://www.progettoitaca.org/images/logo_progetto_itaca.png" alt="Progetto Itaca">
+        <form style="position:absolute;bottom:1%;left:0;width:100%;background-color:#ffe4b3;left:1%" action="/" method="get" onsubmit="return false;">
+            <input class="textsend" id="inputext" type="text" style="height:40px" /><input class="button" id="sendBut" type="submit" value="invia" onclick="speak()" />
+        </form>
+    </div>
+    <div id="loginarea" style="display:none">
+        <div id="fb-root"></div>
+        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        </fb:login-button>
+        <button id="gm" onclick="checkAuth()">GOOGLE</button>
+        <button id="guest" onclick="guest()">GUEST</button>
+    </div>
 </body>

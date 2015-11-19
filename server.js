@@ -64,7 +64,7 @@ var SampleApp = function() {
             res.setHeader('Content-Type','text/html');
             res.send(self.cache_get('index.html'));
         };
-		  self.routes['/shutdown']=function(req,res){if(!req.isAuthenticated()){res.redirect(HOST+'/login.html')}else{process.exit();}};
+		  self.routes['/shutdown']=function(req,res){process.exit();};
     };
     self.initializeServer=function(){self.createRoutes();self.app=express.createServer();self.app.use(express.static(__dirname));for(var r in self.routes){self.app.get(r,self.routes[r]);}};
     self.initialize=function(){self.setupVariables();self.populateCache();self.setupTerminationHandlers();self.initializeServer();};

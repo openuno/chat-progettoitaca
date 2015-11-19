@@ -151,7 +151,7 @@
         }
 
         function onMessage(evt) {
-            mycolorx();
+            if(!colorx){mycolorx();}
             writeToScreen('<span style="color: ' + colorx + ';">' + evt.data + '</span>');
             //websocket.close();
         }

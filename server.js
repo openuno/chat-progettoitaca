@@ -143,13 +143,13 @@ var SampleApp = function () {
                     if (true) {
                         for (cc = 0; cc < cclients.length; cc++) {
                             cn = cclients[cc];
-                            if (cn.connected) cn.sendUTF(message.utf8Data+'ciao');
+                            if (cn.connected) cn.sendUTF('ciao');
                         }
                     }
                 } else if (message.type === 'binary') {
                     for (cc = 0; cc < cclients.length; cc++) {
                         cn = cclients[cc];
-                        if (cn.connected) cn.sendBytes(message.binaryData+'is binary');
+                        if (cn.connected) cn.sendBytes('is binary');
                     }
                 }
             });

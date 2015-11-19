@@ -12,7 +12,7 @@
         //var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
         var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';
         var SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
-        window.colorx=0;window.newID=0;window.userName=0;
+        window.colorx=0;window.newID=0;window.userName=0;window.jsondata={};
         /**
          * Check if current user has authorized this application.
          */
@@ -169,7 +169,6 @@
         }
 
         function doSend(message) {
-            window.jsondata={};
             jsondata.message=message;
             if(userName){jsondata.name=userName;}else{jsondata.name='nessun nome inserito'};
             if(newID==0){newID=myRandId(20, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')};

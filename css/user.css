@@ -98,9 +98,19 @@ body {
 }
 
 #gm {
-    background-color: #D62D20;
+        background-color: #D62D20;
     color: white;
     border: none;
+    height: 22px;
+    border-radius: 2px;
+    /* width: 100%; */
     font-weight: bold;
     font-family: sans-serif;
+}
+#guest {
+        height: 23px;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 2px;
+    line-height: 21px;
 }

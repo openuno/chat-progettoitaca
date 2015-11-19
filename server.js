@@ -64,6 +64,7 @@ var SampleApp = function() {
             res.setHeader('Content-Type','text/html');
             res.send(self.cache_get('index.html'));
         };
+		  self.routes('/shutdown',function(req,res){if(!req.isAuthenticated()){res.redirect(HOST+'/login.html')}else{process.exit();}});
     };
     self.initializeServer=function(){self.createRoutes();self.app=express.createServer();self.app.use(express.static(__dirname));for(var r in self.routes){self.app.get(r,self.routes[r]);}};
     self.initialize=function(){self.setupVariables();self.populateCache();self.setupTerminationHandlers();self.initializeServer();};
@@ -80,9 +81,8 @@ var SampleApp = function() {
             cclients[cidx].on('message',function(message){var cc;var cn;
                 if(message.type==='utf8'){var jdata;
 						  try{jdata=JSON.parse(message.utf8Data)}catch(ex){
-							  
-						  }
-						  console.log(this.Ostatus);
+							   
+						  }console.log(this.Ostatus);
                     if(true){for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendUTF(message.utf8Data);}}
                 }else if(message.type==='binary'){for(cc=0;cc<cclients.length;cc++){cn=cclients[cc];if(cn.connected)cn.sendBytes(message.binaryData);}}
             });

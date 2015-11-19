@@ -12,10 +12,15 @@
         //var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
         var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';
         var SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
-        window.colorx=0;
+        window.colorx=0;window.newID=0;window.userName=0;
         /**
          * Check if current user has authorized this application.
          */
+        function myRandId(length,chars){
+            var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+        }
         function checkAuth() {
             gapi.auth.authorize({
                 'client_id': CLIENT_ID,
@@ -69,6 +74,7 @@
         function google_getEmailCallback(obj) { /*setdbsession(obj['email']);*/
             console.log(JSON.stringify(obj))
             document.getElementById('inputuser').value = obj['name'];
+            window.userName=obj['name'];
             window.chatsession.logged = true;
             document.getElementById('loginarea').style.display = "none";
             document.getElementById('supercontainer').style.display = "";
@@ -163,7 +169,12 @@
         }
 
         function doSend(message) {
-            websocket.send(message);
+            window.jsondata={};
+            jsondata.message=message;
+            if(userName){jsondata.name=userName;}else{jsondata.name='nessun nome inserito'};
+            if(newID==0){newID=myRandId(20, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')};
+            jsondata.id=newID;
+            websocket.send(JSON.stringify(jsondata));
         }
 
         function writeToScreen(message) {
@@ -187,6 +198,7 @@
                     if (words == '') {
                         words = myRandName
                     }
+                    window.userName=words;
                     words = words + ': ' + document.getElementById('inputext').value;
                 }
                 document.getElementById('inputext').value = '';
@@ -245,6 +257,7 @@
                 FB.api('/me', function (response) {
                     console.log('Successful login for: ' + response.name);
                     document.getElementById('inputuser').value = response.name;
+                    window.userName=response.name;
                     chatsession.logged = true;
                     chatsession.mail = mail;
                     document.getElementById('supercontainer').style.display = '';

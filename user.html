@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name=viewport content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="metaschema.js"></script>
     <title>Progetto Itaca Onlus - Progetto Arancione</title>
     <script>
         //_u1=function(o,t,v){o.setAttribute(t,v);};_u2=function(u){var o=document.createElement('script');_u1(o,'type','text/javascript');_u1(o,'src',u);document.getElementsByTagName('head')[0].appendChild(o);};
@@ -206,6 +207,7 @@
         };
 
         function myInit() {
+            window.qrs=ooo.querystring('p');
             if (window.chatsession.logged) {
                 document.getElementById('supercontainer').style.display = '';
             } else {

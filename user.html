@@ -169,12 +169,7 @@
         }
 
         function doSend(message) {
-            jsondata.message=message;
-            if(userName){jsondata.name=userName;}else{jsondata.name='nessun nome inserito'};
-            if(newID==0){newID=myRandId(20, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')};
-            jsondata.id=newID;
-            jsondata.progetto=qrs;
-            websocket.send(JSON.stringify(jsondata));
+            
         }
 
         function writeToScreen(message) {
@@ -201,7 +196,14 @@
                     }
                     words = words + ': ' + document.getElementById('inputext').value;
                 }
+                var msg=document.getElementById('inputext').value;
                 document.getElementById('inputext').value = '';
+                jsondata.message=msg;
+            if(userName){jsondata.name=userName;}else{jsondata.name='nessun nome inserito'};
+            if(newID==0){newID=myRandId(20, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')};
+            jsondata.id=newID;
+            jsondata.progetto=qrs;
+            websocket.send(JSON.stringify(jsondata));
                 websocket.send(words);
             }
             //TODO:SCROLL DOWN OUTPUTDIV

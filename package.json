@@ -29,5 +29,5 @@
   "devDependencies": {},
   "bundleDependencies": [],
   "private": true,
-  "main": "metaschema.js"
+  "main": "server.js"
 }

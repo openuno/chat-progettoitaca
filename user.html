@@ -282,10 +282,10 @@
         </form>
     </div>
     <div id="loginarea" style="display:none">
-        <div id="fb-root"></div>
+        <div id="fb-root" class="logbut"></div>
         <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
-        <button id="gm" onclick="checkAuth()">GOOGLE</button>
-        <button id="guest" onclick="guest()">GUEST</button>
+        </fb:login-button><br/>
+        <button id="gm" class="logbut" onclick="checkAuth()">GOOGLE</button><br/>
+        <button id="guest" class="logbut" onclick="guest()">GUEST</button>
     </div>
 </body>

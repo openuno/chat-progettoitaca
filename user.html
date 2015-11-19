@@ -11,6 +11,7 @@
         //var CLIENT_ID = '627967426443-ciskfd5430lhio1jraopblcioqdp4p21.apps.googleusercontent.com';
         var CLIENT_ID = '327837683791-og5set7ijv4b8iunpf349qp4fc4b3hnc.apps.googleusercontent.com';
         var SCOPES = ['https://www.googleapis.com/auth/userinfo.profile'];
+        window.colorx=0;
         /**
          * Check if current user has authorized this application.
          */
@@ -151,7 +152,7 @@
         }
 
         function onMessage(evt) {
-            if(!colorx){mycolorx();}
+            if(colorx==0){mycolorx();}
             writeToScreen('<span style="color: ' + colorx + ';">' + evt.data + '</span>');
             //websocket.close();
         }

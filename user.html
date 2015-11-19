@@ -187,12 +187,13 @@
             } else {
                 if (!words) {
                     words = document.getElementById('inputuser').value;
+                    userName=words;
                     if (!words) {
                         words = ''
                     }
                     if (words == '') {
                         words = myRandName;
-                         window.userName=words;
+                         userName=words;
                     }
                     words = words + ': ' + document.getElementById('inputext').value;
                 }
